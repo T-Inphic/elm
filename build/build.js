@@ -13,6 +13,36 @@ var webpackConfig = require('./webpack.prod.conf')
 var spinner = ora('building for production...')
 spinner.start()
 
+var express = require('express')
+var app = express()
+var compiler = webpack(webpackConfig)
+var appData = require('../static/data.json')
+var seller = appData.sellers
+var goods = appData.goods
+var ratings = appData.ratings
+var apiRoutes = express.Router()
+
+apiRoutes.get('/seller',function(req, res){
+  res.json({
+    errno: 0,
+    data: seller
+  })
+})
+apiRoutes.get('/goods',function(req, res){
+  res.json({
+      errno: 0,
+      data: goods
+  })
+})
+apiRoutes.get('/ratings',function(req, res){
+  res.json({
+      errno: 0,
+      data: ratings
+  })
+})
+
+app.use('/api', apiRoutes)
+
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   if (err) throw err
   webpack(webpackConfig, function (err, stats) {

@@ -22,7 +22,7 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 var compiler = webpack(webpackConfig)
-var appData = require('../dist/static/data.json')
+var appData = require('../static/data.json')
 var seller = appData.sellers
 var goods = appData.goods
 var ratings = appData.ratings
