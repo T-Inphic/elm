@@ -15,7 +15,7 @@
         <li v-for="(item,index) in goods" class="food-list food-list-hook">
           <h1 class="title">{{ item.name }}</h1>
           <ul>
-            <li v-for="(food,index) in item.foods" class="food-item border-1px">
+            <li v-for="(food,index) in item.foods" class="food-item border-1px" @click="itemFood(food)">
               <div class="icon">
                 <img :src="food.icon" width="57" height="57" alt="">
               </div>
@@ -39,6 +39,7 @@
         </li>
       </ul>
     </div>
+    <foodDetail :foodData="foodData" ref="foodDetials"></foodDetail>
     <shopCart :select-foods="selectFood" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopCart>
   </div>
 </template>
@@ -46,6 +47,7 @@
   import BScroll from 'better-scroll'
   import shopCart from '../shopCart/shopCart.vue'
   import buyControl from '../buyControl/buyControl.vue'
+  import foodDetail from '../foodDetail/detail.vue'
   export default{
     props: {
       seller: {
@@ -57,11 +59,13 @@
         goods: [],
         listHeight: [],
         scrollY: 0,
+        foodData: {},
       }
     },
     components: {
       shopCart,
-      buyControl
+      buyControl,
+      foodDetail
     },
     computed: {
       currentIndex() {
@@ -89,8 +93,8 @@
     },
     created() {
       this.classMap = ['decrease','descount','guarantee','invocie','special'];
-      this.$http.get('/goods').then((res)=>{
-        this.goods = res.data.data
+      this.$http.get('../../../static/data.json').then((res)=>{
+        this.goods = res.data.goods;
         this.$nextTick(() => {
           this._initScroll();
           this._calculateHeight();
@@ -123,6 +127,10 @@
         let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
         let elem = foodList[index];
         this.foodScroll.scrollToElement(elem,300);
+      },
+      itemFood(item) {
+        this.foodData = item;
+        this.$refs.foodDetials.show();
       }
     }
   }

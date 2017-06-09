@@ -11,6 +11,9 @@
     props: {
       food: {
         type: Object,
+      },
+      scroll: {
+        type: Object,
       }
     },
     created() {
@@ -23,9 +26,15 @@
         }else{
           this.food.count++;
         }
+        if(this.scroll){
+          this.scroll.refresh();
+        } 
       },
       decrease() {
-        this.food.count--;       
+        this.food.count--;
+        if(this.scroll){
+          this.scroll.refresh();
+        }       
       }
     }
   }

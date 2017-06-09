@@ -25,8 +25,8 @@ export default {
     }
   },
   created() {
-    this.$http.get('/seller').then((res)=>{
-      this.seller = res.data.data
+    this.$http.get('../../static/data.json').then((res)=>{
+      this.seller = res.data.sellers
     })
   },
   components: {
