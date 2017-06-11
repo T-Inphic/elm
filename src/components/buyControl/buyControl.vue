@@ -1,8 +1,8 @@
 <template>
-  <div class="control">
-    <div class="buy-decrease icon-remove_circle_outline" v-show="food.count > 0" @click="decrease"></div>
+  <div class="control" >
+    <div class="buy-decrease icon-remove_circle_outline" v-show="food.count > 0" @click.stop="decrease"></div>
     <div class="buy-count" v-show="food.count > 0">{{ food.count }}</div>
-    <div class="buy-add icon-add_circle" @click="addCount"></div>
+    <div class="buy-add icon-add_circle" @click.stop="addCount"></div>
   </div>
 </template>
 <script>
@@ -15,9 +15,6 @@
       scroll: {
         type: Object,
       }
-    },
-    created() {
-
     },
     methods: {
       addCount() {
@@ -34,7 +31,7 @@
         this.food.count--;
         if(this.scroll){
           this.scroll.refresh();
-        }       
+        }      
       }
     }
   }

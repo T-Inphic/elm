@@ -266,7 +266,7 @@
         font-weight: 200;
         color: rgb(7,17,27);
         background-color: #f3f5f7;
-        @include border-1px(rgba(7,17,27,0.1));
+        @include border-1px(rgba(7,17,27,0.1),false);
         .empty{
           float: right;
           font-size: 12px;
@@ -281,7 +281,7 @@
         .food{
           position: relative;
           padding: 12px 0;
-          @include border-1px(rgba(7,17,27,0.1));
+          @include border-1px(rgba(7,17,27,0.1),false);
           .name{
             display: inline-block;
             line-height: 24px;
