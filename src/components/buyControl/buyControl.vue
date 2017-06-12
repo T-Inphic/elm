@@ -2,7 +2,9 @@
   <div class="control">
     <div class="buy-decrease icon-remove_circle_outline" v-show="food.count > 0" @click="decrease"></div>
     <div class="buy-count" v-show="food.count > 0">{{ food.count }}</div>
-    <div class="buy-add icon-add_circle" @click="addCount"></div>
+    <transition name="dynamic">
+      <div class="buy-add icon-add_circle" @click="addCount"></div>
+    </transition>
   </div>
 </template>
 <script>
