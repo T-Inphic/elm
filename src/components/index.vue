@@ -55,6 +55,6 @@ export default {
       color: rgb(240, 20, 20);
     }
   }
-  @include border-1px(rgba(7, 17, 27, .1));
+  @include border-1px(rgba(7, 17, 27, .1),false);
 }
 </style>

@@ -39,7 +39,7 @@
         </li>
       </ul>
     </div>
-    <foodDetail :foodData="foodData" ref="foodDetials"></foodDetail>
+    <foodDetail :food="food" ref="foodDetials"></foodDetail>
     <shopCart :select-foods="selectFood" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopCart>
   </div>
 </template>
@@ -59,7 +59,7 @@
         goods: [],
         listHeight: [],
         scrollY: 0,
-        foodData: {},
+        food: {},
       }
     },
     components: {
@@ -129,7 +129,7 @@
         this.foodScroll.scrollToElement(elem,300);
       },
       itemFood(item) {
-        this.foodData = item;
+        this.food = item;
         this.$refs.foodDetials.show();
       }
     }
@@ -196,7 +196,7 @@
           width: 56px;
           vertical-align: middle;
           font-size: 12px;
-          @include border-1px(rgba(7,17,27,0.2));
+          @include border-1px(rgba(7,17,27,0.2),false);
         }
       }
     }
@@ -216,7 +216,7 @@
         margin: 18px;
         margin-bottom: 0;
         padding-bottom: 18px;
-        @include border-1px(rgba(7,17,27,0.2));
+        @include border-1px(rgba(7,17,27,0.2),false);
         &:last-child{
           &:after{
             display: none;
