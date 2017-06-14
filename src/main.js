@@ -11,6 +11,8 @@ import '../src/common/style.css'
 Vue.config.productionTip = false
 
 Vue.prototype.$http = Axios
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

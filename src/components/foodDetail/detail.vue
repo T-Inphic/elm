@@ -64,6 +64,7 @@
   import ratingDetail from '../ratingDetail/ratingDetail.vue'
   import BScroll from 'better-scroll'
   import Vue from 'vue'
+  import eventHub from '../bus/bus.js'
 
 
   const POSITIVE = 0;
@@ -86,6 +87,7 @@
         selectType: ALL,
         onlyContent: true,
         isShowRating: false,
+        foodRating: this.food.ratings,
         desc: {
           all: '全部',
           positive: '推荐',
@@ -93,11 +95,15 @@
         }
       }
     },
+    created() {
+      eventHub.$on('select-tab',this.selectTab);
+    },
     methods: {
       show() {
         this.detailShow = true;
         this.selectType = ALL;
         this.onlyContent = true;
+        this.foodRating = this.food.ratings;
         this.$nextTick(() => {
           if(!this.scroll){
             this.scroll = new BScroll(this.$refs.detail,{
@@ -116,6 +122,24 @@
       },
       selectRating() {
         this.isShowRating = !this.isShowRating;
+        this.selectTab();
+      },
+      selectTab(index) {
+        this.foodRating = [];
+        this.food.ratings.map((item) => {
+          if(index === 2){
+            this.foodRating.push(item)
+          }else if(index === 0){
+            if(!item.rateType){
+              this.foodRating.push(item)
+            }
+          }else if(index === 1){
+            if(item.rateType){
+              this.foodRating.push(item)
+            }
+          }
+        })
+        this.scroll.refresh()
       }
     }
   }

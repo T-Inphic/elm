@@ -8,6 +8,7 @@
   </div>
 </template>
 <script>
+  import  eventHub  from '../bus/bus.js'
   const POSITIVE = 0;
   const NEGATIVE = 1;
   const ALL = 2;
@@ -38,12 +39,6 @@
             negative: '不满意'
           }
         }
-      },
-      foodRating: {
-        type: Array,
-        default() {
-          return []
-        }
       }
     },
     data() {
@@ -54,6 +49,7 @@
     methods: {
       select(index) {
         this.ownSelectType = index;
+        eventHub.$emit('select-tab',index);
       }
     }
   }
