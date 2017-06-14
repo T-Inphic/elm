@@ -32,7 +32,28 @@
         </div>
         <div class="food-info food-rating border-1px">
           <h1>商品评价</h1>
-          <ratingDetail :selectType="selectType" :onlyContent="onlyContent" :desc="desc"></ratingDetail>
+          <ratingDetail :selectType="selectType" :onlyContent="onlyContent" :desc="desc" :foodRating="food.ratings"></ratingDetail>
+          <div class="switch border-1px">
+            <span class="icon-check_circle" :class="{'active': isShowRating}" @click="selectRating()"></span>
+            <span class="text">只看有内容的评价</span>
+          </div>
+          <div class="rating-list">
+            <ul>
+              <li class="rating-item border-1px" v-for="item in food.ratings">
+                <div class="item-time">
+                  <div class="time">{{ item.rateTime }}</div>
+                  <div class="avatar">
+                    <span>{{ item.username }}</span>
+                    <img :src="item.avatar" alt="" width="12" height="12">
+                  </div>
+                </div>
+                <div class="item-text">
+                  <span :class="{'icon-thumb_up': !item.rateType,'icon-thumb_down': item.rateType}"></span>
+                  <p>{{ item.text }}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -64,6 +85,7 @@
         detailShow: false,
         selectType: ALL,
         onlyContent: true,
+        isShowRating: false,
         desc: {
           all: '全部',
           positive: '推荐',
@@ -91,6 +113,9 @@
       },
       addShopCart() {
         Vue.set(this.food,'count',1);
+      },
+      selectRating() {
+        this.isShowRating = !this.isShowRating;
       }
     }
   }
@@ -105,9 +130,11 @@
     bottom: 48px;
     z-index: 30;
     width: 100%;
-    height: 100%;
     background-color: #f3f5f7;
     transform: translate3d(0,0,0);
+    .food-content{
+      
+    }
     .image-header{
       position: relative;
       width: 100%;
@@ -205,6 +232,78 @@
         font-size: 12px;
         font-weight: 200px;
       }
+      .switch{
+      padding: 12px 18px; 
+      font-size: 0;
+      color: rgb(147,153,159);
+      @include border-1px(rgba(7,17,27,0.1),false);
+      .icon-check_circle{
+        vertical-align: middle;
+        margin-right: 4px;
+        font-size: 24px;
+        &.active{
+          color: #00c850;
+        }
+      }
+      .text{
+        vertical-align: middle;
+        font-size: 12px;
+      }
+    }
+  .rating-list{
+    padding: 0 18px;
+    .rating-item{
+      padding: 12px 0;
+      @include border-1px(rgba(7,17,27,0.1),false);
+      .item-time{
+        margin-bottom: 6px;
+        height: 12px;
+        line-height: 12px;
+        font-size: 0;
+        .time,.avatar{
+          display: inline-block;
+          font-size: 10px;
+        }
+        .avatar{
+          float: right;
+          span{
+            margin-right: 6px;
+            height: 12px;
+            line-height: 12px;
+          }
+          img{
+            vertical-align: top;
+            border-radius: 50%;
+          }
+        }
+      }
+      .item-text{
+        font-size: 0;
+        span,p{
+          display: inline-block;
+          vertical-align: middle;
+        }
+        span{
+          margin-right: 4px;
+        }
+        p{
+          line-height: 16px;
+          font-size: 12px;
+          color: rgb(7,17,27);
+        }
+        .icon-thumb_up{
+          line-height: 24px;
+          color: rgb(0,160,220);
+          font-size: 12px;
+        }
+        .icon-thumb_down{
+          line-height: 24px;
+          color: rgb(147,153,159);
+          font-size: 12px;
+        }
+      }
+    }
+  }
     }
     .food-rating{
       padding: 18px 0;

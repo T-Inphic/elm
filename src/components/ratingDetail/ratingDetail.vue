@@ -1,13 +1,9 @@
 <template>
   <div class="ratingselect">
     <div class="rating-type border-1px">
-      <span class="all">{{ desc.all }}<i>57</i></span>
-      <span class="positive">{{ desc.positive }}<i>57</i></span>
-      <span class="negative">{{ desc.negative }}<i>57</i></span>
-    </div>
-    <div class="switch border-1px">
-      <span class="icon-check_circle"></span>
-      <span class="text">只看有内容的评价</span>
+      <span class="all" :class="{'active': ownSelectType === 2}" @click="select(2)">{{ desc.all }}<i>57</i></span>
+      <span class="positive" :class="{'active': ownSelectType === 0}" @click="select(0)">{{ desc.positive }}<i>57</i></span>
+      <span class="negative" :class="{'active': ownSelectType === 1}" @click="select(1)">{{ desc.negative }}<i>57</i></span>
     </div>
   </div>
 </template>
@@ -42,6 +38,22 @@
             negative: '不满意'
           }
         }
+      },
+      foodRating: {
+        type: Array,
+        default() {
+          return []
+        }
+      }
+    },
+    data() {
+      return{
+        ownSelectType: this.selectType,
+      }
+    },
+    methods: {
+      select(index) {
+        this.ownSelectType = index;
       }
     }
   }
@@ -62,30 +74,27 @@
       color: rgb(77,85,93);
       margin-right: 8px;
       &.all{
-        background-color: rgb(0,160,220);
+        background-color: rgba(0,160,220,0.2);
+        &.active{
+          background-color: rgb(0,160,220);
+          color: #fff;
+        }
       }
       &.positive{
         background-color: rgba(0,160,220,0.2);
+        &.active{
+          background-color: rgb(0,160,220);
+          color: #fff;
+        }
       }
       &.negative{
         margin-right: 0;
         background-color: rgba(77,85,93,0.2);
+        &.active{
+          background-color: rgb(0,160,220);
+          color: #fff;
+        }
       }
     }
   }
-  .switch{
-      padding: 12px 18px; 
-      font-size: 0;
-      color: rgb(147,153,159);
-      @include border-1px(rgba(7,17,27,0.1),false);
-      .icon-check_circle{
-        vertical-align: middle;
-        margin-right: 4px;
-        font-size: 24px;
-      }
-      .text{
-        vertical-align: middle;
-        font-size: 12px;
-      }
-    }
 </style>
