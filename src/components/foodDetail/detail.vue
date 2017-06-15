@@ -39,7 +39,7 @@
           </div>
           <div class="rating-list">
             <ul>
-              <li class="rating-item border-1px" v-for="item in food.ratings">
+              <li class="rating-item border-1px" v-for="item in foodRating">
                 <div class="item-time">
                   <div class="time">{{ item.rateTime }}</div>
                   <div class="avatar">
@@ -87,7 +87,8 @@
         selectType: ALL,
         onlyContent: true,
         isShowRating: false,
-        foodRating: this.food.ratings,
+        foodRating: [],
+        selectNum: 2,
         desc: {
           all: '全部',
           positive: '推荐',
@@ -96,6 +97,7 @@
       }
     },
     created() {
+      this.foodRating = this.food.ratings;
       eventHub.$on('select-tab',this.selectTab);
     },
     methods: {
@@ -122,24 +124,47 @@
       },
       selectRating() {
         this.isShowRating = !this.isShowRating;
-        this.selectTab();
+        this.selectTab(this.selectNum);
       },
       selectTab(index) {
         this.foodRating = [];
-        this.food.ratings.map((item) => {
-          if(index === 2){
-            this.foodRating.push(item)
-          }else if(index === 0){
-            if(!item.rateType){
-              this.foodRating.push(item)
-            }
-          }else if(index === 1){
-            if(item.rateType){
-              this.foodRating.push(item)
-            }
+        this.selectNum = index;
+        if(index === 2){
+          if(this.isShowRating){
+            this.food.ratings.map((item) => {
+              if(item.text){
+                this.foodRating.push(item)
+              }
+            })  
+          }else {
+            this.foodRating = this.food.ratings;
+          }
+        }else{
+          if(this.isShowRating){
+            this.food.ratings.map((item) => {
+              if(item.rateType === index){
+                if(item.text){
+                  this.foodRating.push(item)
+                }
+              }
+            })
+          }else {
+            this.food.ratings.map((item) => {
+              if(item.rateType === index){
+                this.foodRating.push(item)
+              }
+            })
+          }
+        }
+        this.$nextTick(() => {
+          if(!this.scroll){
+            this.scroll = new BScroll(this.$refs.detail,{
+              click: true
+            });
+          }else {
+            this.scroll.refresh()
           }
         })
-        this.scroll.refresh()
       }
     }
   }

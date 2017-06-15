@@ -39,7 +39,7 @@
         </li>
       </ul>
     </div>
-    <foodDetail :food="food" ref="foodDetials"></foodDetail>
+    <foodDetail v-if="food.description" :food="food" ref="foodDetials"></foodDetail>
     <shopCart :select-foods="selectFood" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopCart>
   </div>
 </template>
@@ -130,7 +130,9 @@
       },
       itemFood(item) {
         this.food = item;
-        this.$refs.foodDetials.show();
+        this.$nextTick(() => {
+          this.$refs.foodDetials.show();
+        })
       }
     }
   }
